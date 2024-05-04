@@ -1,5 +1,5 @@
 import React from 'react';
-import GymCard from './GymCard';
+import GymCard from '@/components/GymCard';
 
 type Gym = {
     id: number;

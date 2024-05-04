@@ -1,5 +1,5 @@
 import React from 'react';
-import RouteCard from './RouteCard';
+import RouteCard from '@/components/RouteCard';
 
 type Route = {
     id: number;
