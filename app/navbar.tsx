@@ -17,8 +17,12 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
+import { useSession, signIn, signOut } from "next-auth/react";
 
 export default function Navbar() {
+    const session = useSession();
+    const status = session?.status === "authenticated";
+
     return (
       <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 bg-secondary">
       <div className="w-full flex-1">
@@ -40,11 +44,18 @@ export default function Navbar() {
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end">
-          <DropdownMenuLabel>User</DropdownMenuLabel>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem>Logout</DropdownMenuItem>
-        </DropdownMenuContent>
+        {status ? (
+          <DropdownMenuContent align="end">
+            <DropdownMenuLabel>User</DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
+          </DropdownMenuContent>
+        ) : (
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => signIn('google')}>Signin</DropdownMenuItem>
+          </DropdownMenuContent>
+        )}
+        
       </DropdownMenu>
     </header>
     );
