@@ -35,14 +35,14 @@ export default function Sidebar() {
                 </Button>
               </Link>
               <Link
-                href="#"
+                href="/gyms"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <MapIcon className="h-4 w-4" />
                 Find a Gym
               </Link>
               <Link
-                href="#"
+                href="/completed-routes"
                 className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
                 <CheckCircle2Icon className="h-4 w-4" />
