@@ -20,9 +20,7 @@ export default function RootLayout({
       <body className={inter.className}>
         <NextAuthProvider>
           <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-          <div className="flex flex-col">
             {children}
-          </div>
           </div>  
         </NextAuthProvider>
       </body>
