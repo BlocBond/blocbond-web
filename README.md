@@ -2,7 +2,7 @@
 
 <!-- Banner Image -->
 <div align="center">
-  <img width="400" src="public/BlocBond.png" alt="BlocBond Logo" />
+  <img width="400" src="public/BlocBondLogo.png" alt="BlocBond Logo" />
 </div>
 
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
