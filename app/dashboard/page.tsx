@@ -1,7 +1,5 @@
 "use client";
 
-import GymCard from "@/components/GymCard";
-import NoResults from "./noresults";
 import GymRow from "@/components/GymCardRow";
 import RouteCardRow from "@/components/RouteCardRow";
 
