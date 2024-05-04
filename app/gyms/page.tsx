@@ -15,31 +15,55 @@ export default function Map() {
         });
 
         const {Map} = await loader.importLibrary('maps');
-        const { AdvancedMarkerElement } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+        const { AdvancedMarkerElement  } = await google.maps.importLibrary("marker") as google.maps.MarkerLibrary;
+        const { InfoWindow } = await google.maps.importLibrary("maps") as google.maps.MapsLibrary;
 
+        const boulderingGyms = [
+          {
+              position: { lat: 43.55212, lng: -80.22461 }, 
+              title: "Grotto",
+              id: '1',
+          },
+          {
+              position: { lat: 43.53363, lng: -80.22412 }, 
+              title: "Guelph Athletics Center",
+              id: '2',
+          },
+        ];
+
+        const infoWindow = new InfoWindow();
 
         // map position
-        const position = {
-          lat: 43.55212,
-          lng: -80.22461
-        }
+        // const position = {
+        //   lat: 43.55212,
+        //   lng: -80.22461
+        // }
 
         // map options
         const mapOptions: google.maps.MapOptions = {
-          center: position,
-          zoom: 17,
+          center: boulderingGyms.filter(gym => gym.title === "Grotto")[0]?.position,
+          zoom: 12,
           mapId: 'MAPID',
         }
 
         // setup map
         const map = new Map(mapRef.current as HTMLDivElement, mapOptions);
 
-        const marker = new AdvancedMarkerElement({
-          map: map,
-          position: position,
-          title: 'Grotto',
-          gmpClickable: true
-        });
+        boulderingGyms.forEach(({position, title}, i) => {
+          const marker = new AdvancedMarkerElement({
+              position,
+              map,
+              title: `${i + 1}. ${title}`,
+          });
+          // Add a click listener for each marker, and set up the info window.
+          marker.addListener('click', () => {
+              const content = `<div><a href="/gyms/${i + 1}">${marker.title}</a></div>`;
+              // console.log{marker.id);
+              infoWindow.close();
+              infoWindow.setContent(content);
+              infoWindow.open(marker.map, marker);
+          });
+      });
     }
 
     initMap();
