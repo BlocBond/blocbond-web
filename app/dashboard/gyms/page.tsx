@@ -29,6 +29,11 @@ export default function Map() {
               title: "Guelph Athletics Center",
               id: '2',
           },
+          {
+              position: { lat: 43.47542, lng: -80.52020 }, 
+              title: "Grand River Rocks",
+              id: '3',
+          },
         ];
 
         const infoWindow = new InfoWindow();

@@ -34,7 +34,7 @@ export default function Sidebar() {
                 </Button>
               </Link>
               <Link
-                href="/gyms"
+                href="dashboard/gyms"
               >
                 <Button variant={pathname && pathname.startsWith("/gyms") ? "secondary" : "ghost"} className="w-full justify-start">
                 <MapIcon className="h-4 w-4 mr-2" />
@@ -42,7 +42,7 @@ export default function Sidebar() {
                 </Button>
               </Link>
               <Link
-                href="/completed-routes"
+                href="dashboard/completed-routes"
               >
                 <Button variant={pathname && pathname.startsWith("/completed-routes") ? "secondary" : "ghost"} className="w-full justify-start">
                 <CheckCircle2Icon className="h-4 w-4 mr-2" />
