@@ -2,8 +2,10 @@ import React from 'react';
 import GymCard from './GymCard';
 
 type Gym = {
+    id: number;
     name: string;
-    imageUrl: string;
+    logoImageUrl?: string;
+    featureImageUrl?: string;
 };
 
 type GymRowProps = {
@@ -14,7 +16,7 @@ export default function GymRow({ gyms }: GymRowProps) {
     return (
         <div className="flex flex-row items-start gap-8">
             {gyms.map((gym) => (
-                <GymCard key={gym.name} imageUrl={gym.imageUrl} name={gym.name} />
+                <GymCard key={gym.name} id={gym.id} imageUrl={gym.logoImageUrl ?? ''} name={gym.name} />
             ))}
         </div>
     );

@@ -35,14 +35,13 @@ export default function Navbar() {
       </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="secondary" size="icon" className="rounded-full">
+          <Button variant="secondary" size="icon" className="rounded-full bg-background text-black">
             <CircleUserIcon className="h-5 w-5" />
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
-          <DropdownMenuLabel>Your Name</DropdownMenuLabel>
-          <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
+          <DropdownMenuLabel>User</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Logout</DropdownMenuItem>
         </DropdownMenuContent>
