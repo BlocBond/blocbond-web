@@ -42,7 +42,7 @@ export default function Navbar() {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Your Name</DropdownMenuLabel>
-          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <Link href="/profile"><DropdownMenuItem>Profile</DropdownMenuItem></Link>
           <DropdownMenuSeparator />
           <DropdownMenuItem>Logout</DropdownMenuItem>
         </DropdownMenuContent>
