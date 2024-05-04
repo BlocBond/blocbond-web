@@ -24,32 +24,33 @@ export default function Sidebar() {
             </Link>
           </div>
           <div className="flex-1">
-            <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+            <nav className="grid items-start px-2 text-sm font-medium lg:px-4 gap-2">
               <Link
                 href="/"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <Button variant="secondary" className="w-full justify-start bg-emerald-900 text-white">
-                  <SearchIcon className="h-4 w-4" />
+                <Button variant={pathname === "/" ? "secondary" : "ghost"} className="w-full justify-start">
+                  <SearchIcon className="h-4 w-4 mr-2" />
                   Explore
                 </Button>
               </Link>
               <Link
                 href="/gyms"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <MapIcon className="h-4 w-4" />
+                <Button variant={pathname.startsWith("/gyms") ? "secondary" : "ghost"} className="w-full justify-start">
+                <MapIcon className="h-4 w-4 mr-2" />
                 Find a Gym
+                </Button>
               </Link>
               <Link
                 href="/completed-routes"
-                className="flex items-center gap-3 rounded-lg px-3 py-2 text-muted-foreground transition-all hover:text-primary"
               >
-                <CheckCircle2Icon className="h-4 w-4" />
+                <Button variant={pathname.startsWith("/completed-routes") ? "secondary" : "ghost"} className="w-full justify-start">
+                <CheckCircle2Icon className="h-4 w-4 mr-2" />
                 Completed Routes
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-900">
                   6
                 </Badge>
+                </Button>
               </Link>
             </nav>
           </div>
