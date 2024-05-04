@@ -36,7 +36,7 @@ export default function Sidebar() {
               <Link
                 href="/gyms"
               >
-                <Button variant={pathname.startsWith("/gyms") ? "secondary" : "ghost"} className="w-full justify-start">
+                <Button variant={pathname && pathname.startsWith("/gyms") ? "secondary" : "ghost"} className="w-full justify-start">
                 <MapIcon className="h-4 w-4 mr-2" />
                 Find a Gym
                 </Button>
@@ -44,7 +44,7 @@ export default function Sidebar() {
               <Link
                 href="/completed-routes"
               >
-                <Button variant={pathname.startsWith("/completed-routes") ? "secondary" : "ghost"} className="w-full justify-start">
+                <Button variant={pathname && pathname.startsWith("/completed-routes") ? "secondary" : "ghost"} className="w-full justify-start">
                 <CheckCircle2Icon className="h-4 w-4 mr-2" />
                 Completed Routes
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-emerald-900">
