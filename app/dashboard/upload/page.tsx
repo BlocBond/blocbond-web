@@ -138,7 +138,7 @@ const CanvasComponent = () => {
         />
       </div>
       <div className="pt-5 flex gap-5">
-        <Button onClick={handleClear} variant="primary" className="border border-black">
+        <Button onClick={handleClear} variant="ghost" className="border border-black">
           Clear
         </Button>
         <Button variant="secondary" >
