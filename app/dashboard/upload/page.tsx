@@ -202,7 +202,7 @@ const CanvasComponent = () => {
               ref={canvasRef}
               width={imageSize.width}
               height={imageSize.height}
-              className='border border-black'
+              // className='border border-black'
               style={{ position: 'absolute', top: 0, left: 0 }}
             />
             <div className='flex justify-center'>
