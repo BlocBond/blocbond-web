@@ -124,37 +124,53 @@ const CanvasComponent = () => {
     setStrokeColor(event.target.value); // Update stroke color based on color picker value
   };
 
+  const [imageSrc, setImageSrc] = useState<string | null>(null);
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    const reader = new FileReader();
+
+    reader.onload = () => {
+      setImageSrc(reader.result as string);
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
+    }
+  };
 
   return (
-    <div style={{ position: 'relative' }}>
-
-      <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />
-      <canvas
-        ref={canvasRef}
-        width={imageSize.width}
-        height={imageSize.height}
-        className='border border-black'
-        style={{ position: 'absolute', top: 0, left: 0 }}
-      />
-      <div className="pt-5">
-        <label htmlFor="colorPicker">Color:</label>
-        <input
-          id="colorPicker"
-          type="color"
-          value={strokeColor}
-          onChange={handleColorChange}
-          style={{ marginLeft: '10px' }}
+    <>
+      <input type="file" onChange={handleFileChange} accept="image/*" />
+      <div style={{ position: 'relative' }}>
+        {imageSrc && <Image src={imageSrc} alt="Uploaded Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />}
+        {/* <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" /> */}
+        <canvas
+          ref={canvasRef}
+          width={imageSize.width}
+          height={imageSize.height}
+          className='border border-black'
+          style={{ position: 'absolute', top: 0, left: 0 }}
         />
+        <div className="pt-5">
+          <label htmlFor="colorPicker">Color:</label>
+          <input
+            id="colorPicker"
+            type="color"
+            value={strokeColor}
+            onChange={handleColorChange}
+            style={{ marginLeft: '10px' }}
+          />
+        </div>
+        <div className="pt-5 flex gap-5">
+          <Button onClick={handleClear} variant="ghost" className="border border-black">
+            Clear
+          </Button>
+          <Button variant="secondary">
+            Submit
+          </Button>
+        </div>
       </div>
-      <div className="pt-5 flex gap-5">
-        <Button onClick={handleClear} variant="ghost" className="border border-black">
-          Clear
-        </Button>
-        <Button variant="secondary">
-          Submit
-        </Button>
-      </div>
-    </div>
+    </>
   );
 };
 
