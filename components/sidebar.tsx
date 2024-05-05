@@ -60,7 +60,7 @@ export default function Sidebar() {
               >
                 <Button variant={pathname && pathname.startsWith("/dashboard/upload") ? "secondary" : "ghost"} className="w-full justify-start">
                 <CropIcon className="h-4 w-4 mr-2" />
-                Route Editor
+                Route Upload
                 </Button>
               </Link>
             </nav>
