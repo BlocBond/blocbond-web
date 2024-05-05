@@ -11,7 +11,7 @@ type Route = {
 
 export default function RouteCard({ id, imageUrl, name }: Route) {
     return (
-        <Link href={"/routes/" + id}>
+        <Link href={"/dashboard/routes/" + id}>
         <div className="flex flex-col items-center text-center border">
             <Image src="" width={300} height={100} alt={name} className="mb-4" />
             {name}
