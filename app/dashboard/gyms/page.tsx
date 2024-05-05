@@ -62,7 +62,7 @@ export default function Map() {
           });
           // Add a click listener for each marker, and set up the info window.
           marker.addListener('click', () => {
-              const content = `<div><a href="/gyms/${i + 1}">${marker.title}</a></div>`;
+              const content = `<div><a href="/dashboard/gyms/${i + 1}">${marker.title}</a></div>`;
               // console.log{marker.id);
               infoWindow.close();
               infoWindow.setContent(content);
