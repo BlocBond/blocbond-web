@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import {
   CheckCircle2Icon,
+  CropIcon,
   MapIcon,
   MountainIcon,
   SearchIcon,
@@ -52,6 +53,14 @@ export default function Sidebar() {
                 <Badge className="ml-auto flex h-6 w-6 shrink-0 items-center justify-center rounded-full bg-secondary">
                   6
                 </Badge>
+                </Button>
+              </Link>
+              <Link
+                href="/dashboard/upload"
+              >
+                <Button variant={pathname && pathname.startsWith("/dashboard/upload") ? "secondary" : "ghost"} className="w-full justify-start">
+                <CropIcon className="h-4 w-4 mr-2" />
+                Route Editor
                 </Button>
               </Link>
             </nav>
