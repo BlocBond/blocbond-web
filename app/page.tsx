@@ -25,6 +25,53 @@ import Link from "next/link";
 // )
 
 export default function Home() {
+  function handleDefaultLogin () {
+    const email = document.getElementById('email') as HTMLInputElement;
+    const password = document.getElementById('password') as HTMLInputElement;
+
+    if (email?.value && password?.value) {
+        const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/authenticate'
+        
+        const requestBody = {
+            username: email?.value,
+            password: password?.value
+        };
+        console.log(requestBody)
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(requestBody),
+            credentials: 'include',
+            // mode: 'no-cors'
+        })
+        .then(response => response.json())
+        .then(json => {
+            console.log('parsed json', json) // access json.body here
+        })
+        // .then(response => {
+        //     console.log(response.json())
+        //     if (!response.ok) {
+        //         throw new Error('Network response was not ok');
+        //     }
+        //     return response.json(); // Parse JSON response
+        // })
+        // .then(data => {
+        //     console.log('Response:', data); 
+        // })
+        // .catch(error => {
+        //     console.error('There was a problem with the fetch operation:', error);
+        // });
+    }
+  }
+
+  function handleGoogleLogin () {
+    console.log("Calling fetch for google sign in")
+  }
+
   return (
     <div className="h-[50rem] w-full dark:bg-black bg-white  dark:bg-dot-white/[0.2] bg-dot-black/[0.2] relative flex items-center justify-center">
       {/* Radial gradient for the container to give a faded look */}
@@ -100,7 +147,8 @@ export default function Home() {
         </div>
         
         <DialogFooter>
-          <Link href="/dashboard"><Button variant="outline" type="submit">Continue</Button></Link>
+          {/* <Link href="/dashboard"><Button variant="outline" type="submit">Continue</Button></Link> */}
+          <Button variant="outline" type="submit" onClick={handleDefaultLogin}>Continue</Button>
         </DialogFooter>
       </DialogContent>
     </Dialog>
