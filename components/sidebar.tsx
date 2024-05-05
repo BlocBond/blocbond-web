@@ -23,7 +23,7 @@ export default function Sidebar() {
             <Link href="/" className="flex items-center gap-2 text-white font-bold">
               {/* <MountainIcon className="h-6 w-6 fill-current" fill="" /> */}
               <Image src="/BlocBondLogo-transparent.png" alt="BlockBond Logo" width={50} height={50} />
-              <span className="">BlockBond</span>
+              <span className="">BlocBond</span>
             </Link>
           </div>
           <div className="flex-1 border-r">
