@@ -1,12 +1,10 @@
 import Image from "next/image";
 import { signIn } from "next-auth/react";
-import { useRouter} from "next/navigation";
 
 export default function GoogleSignInButton() {
-    const router = useRouter();
 
     const handleSignIn = async () => {
-        signIn("google", {callbackUrl: "/dashboard"});
+        await signIn("google", {callbackUrl: "/dashboard"})
     };
 
     return (
