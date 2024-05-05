@@ -209,7 +209,8 @@ const CanvasComponent = () => {
           climb_type: category?.value,
           hold_type: holdType?.value,
           description: description?.value,
-          image_name: imageDataURL
+          image_data: imageDataURL,
+          image_name: "grotto_new"
       };
 
       fetch(url, {
