@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { toast } from "sonner";
 
 // import { Input } from '@/components/ui/input';
 // import { cn } from "@/lib/utils"
@@ -227,7 +228,8 @@ const CanvasComponent = () => {
           throw new Error('Failed to upload image');
         }
 
-        console.log("YAY", response)
+        console.log("YAY", response);
+        toast.success("Successfully uploaded route.");
       })
       .catch(error => {
         console.error('Error uploading image:', error);
