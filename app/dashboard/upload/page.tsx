@@ -44,6 +44,7 @@ const CanvasComponent = () => {
       if (!context) return;
       context.clearRect(0, 0, canvas.width, canvas.height);
       squares.forEach((square) => drawSquare(square));
+      // drawBackgroundImage()
     };
 
     const handleMouseDown = (event: MouseEvent) => {
@@ -128,172 +129,235 @@ const CanvasComponent = () => {
   };
 
   const [imageSrc, setImageSrc] = useState<string | null>(null);
+  
+  function drawBackgroundImage() {
+    const canvas = document.getElementById('canvas2') as HTMLCanvasElement;
+    const ctx = canvas?.getContext('2d');
+    
+    const img = new (window as any).Image();;
+    img.onload = function() {
+      canvas.width = 800;
+      canvas.height = 600;
+      ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = imageSrc;
+    console.log(imageSrc)
+
+  }
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0];
     const reader = new FileReader();
 
-    reader.onload = () => {
-      setImageSrc(reader.result as string);
-    };
-
     if (file) {
       reader.readAsDataURL(file);
     }
-  };
+    const canvas = document.getElementById('canvas2') as HTMLCanvasElement;
+    const ctx = canvas?.getContext('2d');
+    
+    reader.onload = () => {
+      setImageSrc(reader.result as string)
+      // drawBackgroundImage()
+      const img = new (window as any).Image();;
+      img.onload = function() {
+        canvas.width = 800;
+        canvas.height = 600;
+        ctx?.drawImage(img, 0, 0, canvas.width, canvas.height);
+      };
 
-  function uploadFormSubmit () {
+      img.src = reader.result
+    };
+      
+  };
+  // Function to convert data URL to blob
+  function dataURItoBlob(dataURI: any) {
+    const byteString = atob(dataURI.split(',')[1]);
+    const mimeString = dataURI.split(',')[0].split(':')[1].split(';')[0];
+    const arrayBuffer = new ArrayBuffer(byteString.length);
+    const uint8Array = new Uint8Array(arrayBuffer);
+    for (let i = 0; i < byteString.length; i++) {
+      uint8Array[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([arrayBuffer], { type: mimeString });
+  }
+
+  function handleCombineCanvases() {
+    const canvas1 = document.getElementById('canvas') as HTMLCanvasElement;
+    const canvas2 = document.getElementById('canvas2') as HTMLCanvasElement;
+
+    const ctx2 = canvas2?.getContext('2d');
+
+    ctx2?.drawImage(canvas1, 0, 0);
+
+    const imageDataURL = canvas2.toDataURL();
     const routeName = document.getElementById('uploadRouteName') as HTMLInputElement;
     const gymName = document.getElementById('uploadGymName') as HTMLInputElement;
     const vRating = document.getElementById('uploadVRating') as HTMLInputElement;
     const category = document.getElementById('uploadCategory') as HTMLInputElement;
     const description = document.getElementById('uploadDescription') as HTMLInputElement;
     const holdType = document.getElementById('uploadHoldType') as HTMLInputElement;
-
-
+   
+    const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
     if (routeName?.value && gymName?.value && vRating?.value && category?.value && description?.value && holdType?.value) {
-        const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
+      const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
+      
+      const requestBody = {
+          gym_id: "1",
+          climb_name: routeName?.value,
+          gym_name: gymName?.value,
+          v_rating: vRating?.value,
+          climb_type: category?.value,
+          hold_type: holdType?.value,
+          description: description?.value,
+          image_name: imageDataURL
+      };
+
+      fetch(url, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(requestBody),
+        credentials: 'include',
+      })
+      .then(response => {
         
-        const requestBody = {
-            gym_id: "1",
-            climb_name: routeName?.value,
-            gym_name: gymName?.value,
-            v_rating: vRating?.value,
-            climb_type: category?.value,
-            hold_type: holdType?.value,
-            description: description?.value,
-            image_name: "grotto_newholds"
-        };
+        if (!response.ok) {
+          throw new Error('Failed to upload image');
+        }
 
-        fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-
-            },
-            body: JSON.stringify(requestBody),
-            credentials: 'include',
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error('Network response was not ok');
-            }
-            console.log("Register/Login request ok");
-            router.push('/dashboard')
-        })
-        .catch(error => {
-            console.error('There was a problem with the fetch operation:', error);
-        });
-        // May be important for token implementation
-        // .then(response => response.json())
-        // .then(json => {
-        //     console.log('Request', json)
-        // })
+        console.log("YAY", response)
+      })
+      .catch(error => {
+        console.error('Error uploading image:', error);
+      });
     }
+    // const requestBody = {
+    //   image_name: imageDataURL,
+    //   description: "",
+    //   hold_type: "",
+    //   climb_type: "",
+    //   v_rating: "",
+    //   gym_name: "",
+    //   climb_name: routeName,
+    //   gym_id: ""
+    // }
+
+    
+    // const imgElement = document.createElement('img');
+    // imgElement.src = combinedImage;
+
+    // // Optionally, you can download the combined image as a file
+    // // by creating a link element and simulating a click on it
+    // const downloadLink = document.createElement('a');
+    // downloadLink.href = combinedImage;
+    // downloadLink.download = 'combined_image.png';
+    // downloadLink.click();
   }
+  
+  
 
   return (
-    <div>
-      <div className="flex justify-center">
-        <div className = "flex flex-col gap-5">
-        <div className = "pt-10 pb-10 flex justify-center text-4xl font-bold text-center">
-          Upload
+    <>
+      <input type="file" onChange={handleFileChange} accept="image/*" />
+      <div style={{ position: 'relative' }}>
+        <canvas
+          // ref={canvasRef2}
+          width={imageSize.width}
+          height={imageSize.height}
+          className='border border-black'
+          style={{ position: 'absolute', top: 0, left: 0 }}
+          id="canvas2"
+        />
+        <canvas
+          ref={canvasRef}
+          width={800}
+          height={600}
+          className='border border-black'
+          style={{ position: 'absolute', top: 0, left: 0 }}
+          id="canvas"
+        />
+        <div className="pt-5 mt-[600px]">
+          <label htmlFor="colorPicker">Color:</label>
+          <input
+            id="colorPicker"
+            type="color"
+            value={strokeColor}
+            onChange={handleColorChange}
+            style={{ marginLeft: '10px' }}
+          />
         </div>
-          <div>
-            Route Name
-            <div className='border'>
-              <input type="text" id="uploadRouteName" name="uploadRouteName"/>
-            </div>
-          </div>
-          <div>
-            Gym Name
-            <div className='border flex'>
-              <input type="text" id="uploadGymName" name="uploadGymName"/>
-            </div>
-          </div>
-          <div>
-            V-Rating
-            <div className="border text-center">
-              <select id="uploadVRating" name="uploadVRating">
-                <option value="V-1">V-1</option>
-                <option value="V-2">V-2</option>
-                <option value="V-3">V-3</option>
-                <option value="V-4">V-4</option>
-                <option value="V-5">V-5</option>
-                <option value="V-6">V-6</option>
-                <option value="V-7">V-7</option>
-                <option value="V-8">V-8</option>
-                <option value="V-9">V-9</option>
-                <option value="V-10">V-10</option>
-                <option value="V-11">V-11</option>
-                <option value="V-12">V-12</option>
-                <option value="V-13">V-13</option>
-                <option value="V-14">V-14</option>
-                <option value="V-15">V-15</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            Category
-            <div className="border text-center">
-              <select id="uploadCategory" name="uploadCategory">
-                <option value="Overhang">Overhang</option>
-                <option value="Slab">Slab</option>
-                <option value="Dynamic">Dynamic</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            Hold Type
-            <div className="border text-center">
-              <select id="uploadHoldType" name="uploadHoldType">
-                <option value="Pinch">Pinch</option>
-                <option value="Crimp">Crimp</option>
-                <option value="Jug">Jug</option>
-              </select>
-            </div>
-          </div>
-          <div>
-            Description
-            <div className='border'>
-              <input type="text" id="uploadDescription" name="uploadDescription"/>
-            </div>
+        <div>
+          Route Name
+          <div className='border'>
+            <input type="text" id="uploadRouteName" name="uploadRouteName"/>
           </div>
         </div>
-      </div>
-      <div className="flex justify-center pt-5">
-        <div style={{ position: 'relative' }}>
-        {imageSrc && <Image src={imageSrc} alt="Uploaded Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />}            {/* <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component flex justify-center" /> */}
-            <canvas
-              ref={canvasRef}
-              width={imageSize.width}
-              height={imageSize.height}
-              // className='border border-black'
-              style={{ position: 'absolute', top: 0, left: 0 }}
-            />
-            <div className='flex justify-center'>
-              <input type="file" onChange={handleFileChange} accept="image/*" />
-            </div>
-            <div className="pt-5 flex justify-center">
-              <label htmlFor="colorPicker">Hold Highlighter:</label>
-              <input
-                id="colorPicker"
-                type="color"
-                value={strokeColor}
-                onChange={handleColorChange}
-                style={{ marginLeft: '10px' }}
-              />
-            </div>
-            <div className="pt-5 gap-5 flex justify-center">
-              <Button onClick={handleClear} variant="ghost" className="border border-black">
-                Clear
-              </Button>
-              <Button variant="secondary" type="submit" onClick={uploadFormSubmit}>
-                Submit
-              </Button>
-            </div>
+        <div>
+          Gym Name
+          <div className='border flex'>
+            <input type="text" id="uploadGymName" name="uploadGymName"/>
+          </div>
+        </div>
+        <div>
+          V-Rating
+          <div className="border text-center">
+            <select id="uploadVRating" name="uploadVRating">
+              <option value="V-1">V-1</option>
+              <option value="V-2">V-2</option>
+              <option value="V-3">V-3</option>
+              <option value="V-4">V-4</option>
+              <option value="V-5">V-5</option>
+              <option value="V-6">V-6</option>
+              <option value="V-7">V-7</option>
+              <option value="V-8">V-8</option>
+              <option value="V-9">V-9</option>
+              <option value="V-10">V-10</option>
+              <option value="V-11">V-11</option>
+              <option value="V-12">V-12</option>
+              <option value="V-13">V-13</option>
+              <option value="V-14">V-14</option>
+              <option value="V-15">V-15</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          Category
+          <div className="border text-center">
+            <select id="uploadCategory" name="uploadCategory">
+              <option value="Overhang">Overhang</option>
+              <option value="Slab">Slab</option>
+              <option value="Dynamic">Dynamic</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          Hold Type
+          <div className="border text-center">
+            <select id="uploadHoldType" name="uploadHoldType">
+              <option value="Pinch">Pinch</option>
+              <option value="Crimp">Crimp</option>
+              <option value="Jug">Jug</option>
+            </select>
+          </div>
+        </div>
+        <div>
+          Description
+          <div className='border'>
+            <input type="text" id="uploadDescription" name="uploadDescription"/>
+          </div>
+        </div>
+        <div className="pt-5 flex gap-5">
+          <Button onClick={handleClear} variant="ghost" className="border border-black">
+            Clear
+          </Button>
+          <Button onClick={handleCombineCanvases} variant="secondary">
+            Submit
+          </Button>
         </div>
       </div>
-    </div>
+
+    </>
   );
 };
 
