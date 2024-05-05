@@ -2,7 +2,7 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
-import { Button } from "@/components/ui/button"
+import { Button } from '@/components/ui/button';
 
 interface Square {
   x: number;
@@ -15,10 +15,9 @@ const CanvasComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [imageSize, setImageSize] = useState<{ width: number; height: number }>({ width: 0, height: 0 });
   const [squares, setSquares] = useState<Square[]>([]);
+  const [strokeColor, setStrokeColor] = useState<string>('black'); // Default stroke color
   const startPosition = useRef<{ x: number; y: number } | null>(null);
   const endPosition = useRef<{ x: number; y: number } | null>(null);
-  const [strokeColor, setStrokeColor] = useState<string>('black'); // Default stroke color
-
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -32,11 +31,11 @@ const CanvasComponent = () => {
       context.strokeRect(square.x, square.y, square.width, square.height); // Draw the outline
     };
 
-    const fillCanvas = (color: string) => {
-      if (!context) return;
-      context.fillStyle = color;
-      context.fillRect(0, 0, canvas.width, canvas.height);
-    };
+    // const fillCanvas = (color: string) => {
+    //   if (!context) return;
+    //   context.fillStyle = color;
+    //   context.fillRect(0, 0, canvas.width, canvas.height);
+    // };
 
     const drawAllSquares = () => {
       if (!context) return;
@@ -79,10 +78,19 @@ const CanvasComponent = () => {
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mouseup', handleMouseUp);
 
+
+    const handleResize = () => {
+      handleImageLoad(); // Call handleImageLoad when window is resized
+    };
+
+    window.addEventListener('resize', handleResize);
+
+  
     // Redraw all squares when squares or image size change
     drawAllSquares();
 
     return () => {
+      window.removeEventListener('resize', handleResize);
       canvas.removeEventListener('mousedown', handleMouseDown);
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mouseup', handleMouseUp);
@@ -107,8 +115,8 @@ const CanvasComponent = () => {
     });
   };
 
-  const handleImageLoad = (event: React.SyntheticEvent<HTMLImageElement, Event>) => {
-    const target = event.target as HTMLImageElement;
+  const handleImageLoad = () => {
+    const target = document.querySelector('.image-component') as HTMLImageElement;
     setImageSize({ width: target.width, height: target.height });
   };
 
@@ -116,10 +124,11 @@ const CanvasComponent = () => {
     setStrokeColor(event.target.value); // Update stroke color based on color picker value
   };
 
-  return (
-    <div style={{ position: 'relative' }} >
 
-      <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} />
+  return (
+    <div style={{ position: 'relative' }}>
+
+      <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />
       <canvas
         ref={canvasRef}
         width={imageSize.width}
@@ -134,14 +143,14 @@ const CanvasComponent = () => {
           type="color"
           value={strokeColor}
           onChange={handleColorChange}
-          style={{ marginLeft: '10px'}}
+          style={{ marginLeft: '10px' }}
         />
       </div>
       <div className="pt-5 flex gap-5">
         <Button onClick={handleClear} variant="ghost" className="border border-black">
           Clear
         </Button>
-        <Button variant="secondary" >
+        <Button variant="secondary">
           Submit
         </Button>
       </div>
