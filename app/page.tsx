@@ -2,7 +2,6 @@
 
 import { motion } from "framer-motion";
 import React from "react";
-import { AuroraBackground } from "@/components/ui/aurora-background";
 import { WobbleCard } from "@/components/ui/wobble-card";
 
 import GoogleSignInButton from "@/components/GoogleSignInButton";
@@ -52,7 +51,7 @@ export default function Home() {
           </div> */}
           <div className="max-w-96 text-right mr-10">
             <p className="text-2xl mb-4 text-cyan-950 font-medium">
-              Join BlocBond and keep track of your climbing routes.
+              Join BlocBond today and find <br />new routes to climb
             </p>
             <Dialog>
       <DialogTrigger asChild>
@@ -118,47 +117,44 @@ export default function Home() {
           >
             <div className="max-w-xs">
               <h2 className="text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                Climbing routes
+                For climbers, by climbers
               </h2>
               <p className="mt-4 text-left  text-base/6 text-neutral-200">
-                Keep track of all the climbing routes you complete from gyms all
-                around the world.
+                Find new routes to climb and keep track of your progress.
               </p>
             </div>
-            <Image
+            {/* <Image
               src="/linear.webp"
               width={500}
               height={500}
               alt="linear demo image"
               className="absolute -right-4 lg:-right-[40%] grayscale filter -bottom-10 object-contain rounded-2xl"
-            />
+            /> */}
           </WobbleCard>
           <WobbleCard containerClassName="col-span-1 bg-teal-900 min-h-[100px]">
             <h2 className="max-w-80  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-              Gyms
+              Start at a gym near you
             </h2>
             <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-              Keep track of all the climbing routes you complete from gyms all
-              around the world.
+              View gyms in your local area with BlocBond Map View.
             </p>
           </WobbleCard>
           <WobbleCard containerClassName="col-span-1 lg:col-span-3 bg-cyan-950 min-h-[300px] lg:min-h-[400px] xl:min-h-[100px]">
-            <div className="max-w-sm">
+            <div className="">
               <h2 className="max-w-sm md:max-w-lg  text-left text-balance text-base md:text-xl lg:text-3xl font-semibold tracking-[-0.015em] text-white">
-                Accessibility
+                Accessibility—everyone can climb
               </h2>
               <p className="mt-4 max-w-[26rem] text-left  text-base/6 text-neutral-200">
-                Keep track of all the climbing routes you complete from gyms all
-                around the world.
+              Designed with accessibility in mind, BlocBond helps colourblind climbers navigate their routes. 
               </p>
             </div>
-            <Image
+            {/* <Image
               src="/linear.webp"
               width={500}
               height={500}
               alt="linear demo image"
               className="absolute -right-10 md:-right-[40%] lg:-right-[20%] -bottom-10 object-contain rounded-2xl"
-            />
+            /> */}
           </WobbleCard>
         </div>
       </motion.div>
