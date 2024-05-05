@@ -17,11 +17,14 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 import { Input } from "@/components/ui/input"
-import { useSession, signIn, signOut } from "next-auth/react";
+import { signOut } from "next-auth/react";
+import { useRouter } from 'next/navigation';
+import { useSession } from "next-auth/react";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 
 export default function Navbar() {
-    const session = useSession();
-    const status = session?.status === "authenticated";
+    const router = useRouter();
+    const { status, data: session } = useSession();
 
     return (
       <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6 bg-secondary">
@@ -37,25 +40,28 @@ export default function Navbar() {
           </div>
         </form>
       </div>
+      <div className="text-white font-medium">
+        {session?.user?.name}
+      </div>
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
           <Button variant="secondary" size="icon" className="rounded-full bg-background text-black">
-            <CircleUserIcon className="h-5 w-5" />
+            <Avatar>
+              {session?.user?.image && (<AvatarImage src={session.user.image} />)}
+              <AvatarFallback></AvatarFallback>
+            </Avatar>
             <span className="sr-only">Toggle user menu</span>
           </Button>
         </DropdownMenuTrigger>
-        {status ? (
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>User</DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem onClick={() => signOut()}>Logout</DropdownMenuItem>
-          </DropdownMenuContent>
-        ) : (
-          <DropdownMenuContent align="end">
-            <DropdownMenuItem onClick={() => signIn('google')}>Signin</DropdownMenuItem>
-          </DropdownMenuContent>
-        )}
-        
+        <DropdownMenuContent align="end">
+          <DropdownMenuItem onClick={() => {
+              signOut({ redirect: false }).then(() => {
+                router.push('/')
+              })
+            }}>
+            Logout
+          </DropdownMenuItem>
+        </DropdownMenuContent>
       </DropdownMenu>
     </header>
     );
