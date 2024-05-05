@@ -3,6 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+
 // import { Input } from '@/components/ui/input';
 // import { cn } from "@/lib/utils"
 
@@ -140,6 +141,56 @@ const CanvasComponent = () => {
     }
   };
 
+  function uploadFormSubmit () {
+    const routeName = document.getElementById('uploadRouteName') as HTMLInputElement;
+    const gymName = document.getElementById('uploadGymName') as HTMLInputElement;
+    const vRating = document.getElementById('uploadVRating') as HTMLInputElement;
+    const category = document.getElementById('uploadCategory') as HTMLInputElement;
+    const description = document.getElementById('uploadDescription') as HTMLInputElement;
+    const holdType = document.getElementById('uploadHoldType') as HTMLInputElement;
+
+
+    if (routeName?.value && gymName?.value && vRating?.value && category?.value && description?.value && holdType?.value) {
+        const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
+        
+        const requestBody = {
+            gym_id: "1",
+            climb_name: routeName?.value,
+            gym_name: gymName?.value,
+            v_rating: vRating?.value,
+            climb_type: category?.value,
+            hold_type: holdType?.value,
+            description: description?.value,
+            image_name: "grotto_newholds"
+        };
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+
+            },
+            body: JSON.stringify(requestBody),
+            credentials: 'include',
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            console.log("Register/Login request ok");
+            router.push('/dashboard')
+        })
+        .catch(error => {
+            console.error('There was a problem with the fetch operation:', error);
+        });
+        // May be important for token implementation
+        // .then(response => response.json())
+        // .then(json => {
+        //     console.log('Request', json)
+        // })
+    }
+  }
+
   return (
     <div>
       <div className="flex justify-center">
@@ -162,7 +213,7 @@ const CanvasComponent = () => {
           <div>
             V-Rating
             <div className="border text-center">
-              <select id="dropdown" name="v-rating">
+              <select id="uploadVRating" name="uploadVRating">
                 <option value="V-1">V-1</option>
                 <option value="V-2">V-2</option>
                 <option value="V-3">V-3</option>
@@ -184,10 +235,20 @@ const CanvasComponent = () => {
           <div>
             Category
             <div className="border text-center">
-              <select id="dropdown" name="category">
+              <select id="uploadCategory" name="uploadCategory">
                 <option value="Overhang">Overhang</option>
                 <option value="Slab">Slab</option>
                 <option value="Dynamic">Dynamic</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            Hold Type
+            <div className="border text-center">
+              <select id="uploadHoldType" name="uploadHoldType">
+                <option value="Pinch">Pinch</option>
+                <option value="Crimp">Crimp</option>
+                <option value="Jug">Jug</option>
               </select>
             </div>
           </div>
@@ -226,7 +287,7 @@ const CanvasComponent = () => {
               <Button onClick={handleClear} variant="ghost" className="border border-black">
                 Clear
               </Button>
-              <Button variant="secondary">
+              <Button variant="secondary" type="submit" onClick={uploadFormSubmit}>
                 Submit
               </Button>
             </div>
