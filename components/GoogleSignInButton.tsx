@@ -6,8 +6,9 @@ export default function GoogleSignInButton() {
     const router = useRouter();
 
     const handleSignIn = async () => {
-        await signIn('google');
-        router.push('/dashboard');
+        //await signIn('google');
+        //router.push('/dashboard');
+        signIn("google", {callbackUrl: "/dashboard"});
     };
 
     return (
