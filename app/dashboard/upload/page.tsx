@@ -3,6 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { cn } from "@/lib/utils"
 
 interface Square {
   x: number;
@@ -139,38 +141,94 @@ const CanvasComponent = () => {
   };
 
   return (
-    <>
-      <input type="file" onChange={handleFileChange} accept="image/*" />
-      <div style={{ position: 'relative' }}>
-        {imageSrc && <Image src={imageSrc} alt="Uploaded Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />}
-        {/* <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" /> */}
-        <canvas
-          ref={canvasRef}
-          width={imageSize.width}
-          height={imageSize.height}
-          className='border border-black'
-          style={{ position: 'absolute', top: 0, left: 0 }}
-        />
-        <div className="pt-5">
-          <label htmlFor="colorPicker">Color:</label>
-          <input
-            id="colorPicker"
-            type="color"
-            value={strokeColor}
-            onChange={handleColorChange}
-            style={{ marginLeft: '10px' }}
-          />
+    <div>
+      <div className="flex justify-center">
+        <div className = "flex flex-col gap-5">
+        <div className = "pt-10 pb-10 flex justify-center text-4xl font-bold text-center">
+          Upload
         </div>
-        <div className="pt-5 flex gap-5">
-          <Button onClick={handleClear} variant="ghost" className="border border-black">
-            Clear
-          </Button>
-          <Button variant="secondary">
-            Submit
-          </Button>
+          <div>
+            Route Name
+            <Input/>
+          </div>
+          <div>
+            Gym Name
+            <Input/>
+          </div>
+          <div>
+            V-Rating
+            <div className="border text-center">
+              <select id="dropdown" name="v-rating">
+                <option value="V-1">V-1</option>
+                <option value="V-2">V-2</option>
+                <option value="V-3">V-3</option>
+                <option value="V-4">V-4</option>
+                <option value="V-5">V-5</option>
+                <option value="V-6">V-6</option>
+                <option value="V-7">V-7</option>
+                <option value="V-8">V-8</option>
+                <option value="V-9">V-9</option>
+                <option value="V-10">V-10</option>
+                <option value="V-11">V-11</option>
+                <option value="V-12">V-12</option>
+                <option value="V-13">V-13</option>
+                <option value="V-14">V-14</option>
+                <option value="V-15">V-15</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            Category
+            <div className="border text-center">
+              <select id="dropdown" name="category">
+                <option value="Overhang">Overhang</option>
+                <option value="Slab">Slab</option>
+                <option value="Dynamic">Dynamic</option>
+              </select>
+            </div>
+          </div>
+          <div>
+            Description
+            <Input className={cn(
+          "flex h-20 w-64 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
+        )}/>
+          </div>
         </div>
       </div>
-    </>
+      <div className="flex justify-center pt-5">
+        <div style={{ position: 'relative' }}>
+        {imageSrc && <Image src={imageSrc} alt="Uploaded Image" width={800} height={600} onLoad={handleImageLoad} className="image-component" />}            {/* <Image src="/Route01.png" alt="Your Image" width={800} height={600} onLoad={handleImageLoad} className="image-component flex justify-center" /> */}
+            <canvas
+              ref={canvasRef}
+              width={imageSize.width}
+              height={imageSize.height}
+              className='border border-black'
+              style={{ position: 'absolute', top: 0, left: 0 }}
+            />
+            <div className='flex justify-center'>
+              <input type="file" onChange={handleFileChange} accept="image/*" />
+            </div>
+            <div className="pt-5 flex justify-center">
+              <label htmlFor="colorPicker">Hold Highlighter:</label>
+              <input
+                id="colorPicker"
+                type="color"
+                value={strokeColor}
+                onChange={handleColorChange}
+                style={{ marginLeft: '10px' }}
+              />
+            </div>
+            <div className="pt-5 gap-5 flex justify-center">
+              <Button onClick={handleClear} variant="ghost" className="border border-black">
+                Clear
+              </Button>
+              <Button variant="secondary">
+                Submit
+              </Button>
+            </div>
+        </div>
+      </div>
+    </div>
   );
 };
 
