@@ -2,6 +2,7 @@
 
 import GymRow from "@/components/GymCardRow";
 import RouteCardRow from "@/components/RouteCardRow";
+import { useGyms } from "@/hooks/useGyms";
 
 export default function Dashboard() {
   return (
