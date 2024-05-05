@@ -3,8 +3,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { cn } from "@/lib/utils"
+// import { Input } from '@/components/ui/input';
+// import { cn } from "@/lib/utils"
 
 interface Square {
   x: number;
@@ -149,11 +149,15 @@ const CanvasComponent = () => {
         </div>
           <div>
             Route Name
-            <Input/>
+            <div className='border'>
+              <input type="text" id="uploadRouteName" name="uploadRouteName"/>
+            </div>
           </div>
           <div>
             Gym Name
-            <Input/>
+            <div className='border flex'>
+              <input type="text" id="uploadGymName" name="uploadGymName"/>
+            </div>
           </div>
           <div>
             V-Rating
@@ -189,9 +193,9 @@ const CanvasComponent = () => {
           </div>
           <div>
             Description
-            <Input className={cn(
-          "flex h-20 w-64 rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background file:border-0 file:bg-transparent file:text-sm file:font-medium placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50",
-        )}/>
+            <div className='border'>
+              <input type="text" id="uploadDescription" name="uploadDescription"/>
+            </div>
           </div>
         </div>
       </div>
