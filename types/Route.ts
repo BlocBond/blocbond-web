@@ -8,6 +8,7 @@ export type Route = {
     climb_type: string;
     description: string;
     gym_name: string;
+    gym_id: string;
     hold_type: string;
     id: number;
     v_rating: string;

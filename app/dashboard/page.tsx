@@ -1,6 +1,8 @@
 "use client";
 
 import GymRow from "@/components/GymCardRow";
+import RouteCardCarouselRow from "@/components/RouteCardCarouselRow";
+import { Route } from "lucide-react";
 
 export default function Dashboard() {
   return (
@@ -25,6 +27,9 @@ export default function Dashboard() {
           },
         ]}
       />
+
+<h2 className="text-2xl mt-20 mb-8">Routes</h2>
+<RouteCardCarouselRow gymId={"all"} />
     </div>
     // <NoResults />
   );
