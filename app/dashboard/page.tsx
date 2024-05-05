@@ -1,8 +1,6 @@
 "use client";
 
 import GymRow from "@/components/GymCardRow";
-import RouteCardRow from "@/components/RouteCardRow";
-import { useGyms } from "@/hooks/useGyms";
 
 export default function Dashboard() {
   return (
@@ -24,26 +22,6 @@ export default function Dashboard() {
             id: 3,
             name: "Grand River Rocks",
             logoImageUrl: "https://grandriverrocks.com/wp-content/themes/grand-river-rocks/images/grand-river-rocks-logo.png",
-          },
-        ]}
-      />
-      <h2 className="text-2xl mt-20 mb-8">Routes</h2>
-      <RouteCardRow
-        routes={[
-          {
-            id: 1,
-            name: "Route 1",
-            imageUrl: "https://via.placeholder.com/300x100",
-          },
-          {
-            id: 2,
-            name: "Route 2",
-            imageUrl: "https://via.placeholder.com/300x100",
-          },
-          {
-            id: 3,
-            name: "Route 3",
-            imageUrl: "https://via.placeholder.com/300x100",
           },
         ]}
       />
