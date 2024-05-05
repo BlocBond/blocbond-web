@@ -17,17 +17,19 @@ import { CheckIcon } from "lucide-react";
 import Image from "next/image";
 import { useState } from "react";
 import { useRoutes } from "@/hooks/useRoutes";
-
+import { toast } from "sonner";
 
 export default function RouteDetails({ params }: { params: { id: string } }) {
-
-    // User Rating selection state
-    const [selectedValue, setSelectedValue] = useState(null);
+  // User Rating selection state
+  const [selectedValue, setSelectedValue] = useState(null);
   const handleSelect = (value: any) => {
     setSelectedValue(value);
   };
 
-  const [gymId, routeId] = params.id.split("-")
+  const [completed, setCompleted] = useState(false);
+
+
+  const [gymId, routeId] = params.id.split("-");
 
   const { routes, isLoading, isError } = useRoutes(gymId);
   if (isLoading) return <div>Loading...</div>;
@@ -64,15 +66,16 @@ export default function RouteDetails({ params }: { params: { id: string } }) {
             The holds for this route are{" "}
             <span className="text-semibold text-red-500">red</span>.
           </p> */}
-          {route && 
-          <Image
-            src={route?.climb_image_url}
-            width={600}
-            height={400}
-            alt={"{Route Name}"}
-          />}
+          {route && (
+            <Image
+              src={route?.climb_image_url}
+              width={600}
+              height={400}
+              alt={"{Route Name}"}
+            />
+          )}
         </div>
-        <div className="col-span-3 pl-12 border-l">
+        {!completed && <div className="col-span-3 pl-12 border-l">
           <h3 className="text-xl mb-4">Completed this route?</h3>
           <p className="mb-2">
             Rate its difficulty to help other BlocBond users.
@@ -101,11 +104,24 @@ export default function RouteDetails({ params }: { params: { id: string } }) {
                 <SelectItem value="V15">V15</SelectItem>
               </SelectContent>
             </Select>
-            <Button disabled={!selectedValue} className="bg-green-700">
+            <Button
+              disabled={!selectedValue}
+              className="bg-green-700"
+              onClick={() => {
+                setCompleted(true);
+                toast.success("You've completed this route.", {
+                  description: "Thank you for your rating.",
+                  action: {
+                    label: "Undo",
+                    onClick: () => setCompleted(false),
+                  },
+                })
+              }}
+            >
               <CheckIcon className="text-white"></CheckIcon>
             </Button>
           </div>
-        </div>
+        </div>}
       </div>
     </div>
   );
