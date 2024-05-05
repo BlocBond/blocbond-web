@@ -17,7 +17,7 @@ export default function RouteCardRow({ gymId }: any) {
     <div className="flex flex-row items-start gap-8">
       {routesArray.map((route) => {
         return (
-          <Link href={`/dashboard/routes/${gymId}-${route.id}`}>
+          <Link id={`${gymId}-${route.id}`} href={`/dashboard/routes/${gymId}-${route.id}`}>
             <div className="flex flex-col items-left text-left border">
               <Image
                 src={route.climb_image_url}
