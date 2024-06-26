@@ -30,6 +30,16 @@ export default function Dashboard() {
               logoImageUrl:
                 "https://grandriverrocks.com/wp-content/themes/grand-river-rocks/images/grand-river-rocks-logo.png",
             },
+            {
+              id: 4,
+              name: "Gneiss Climbing - OG Banks",
+              logoImageUrl: "https://littlebuildingsolutions.com/wp-content/uploads/testimonial-image-gneissclimbing.png"
+            },
+            {
+              id: 5,
+              name: "Gneiss Climbing - Hill Security",
+              logoImageUrl: "https://littlebuildingsolutions.com/wp-content/uploads/testimonial-image-gneissclimbing.png"
+            }
           ]}
         />
 

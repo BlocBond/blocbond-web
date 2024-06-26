@@ -34,6 +34,16 @@ export default function Map() {
               title: "Grand River Rocks",
               id: '3',
           },
+          {
+              position: { lat: 49.88472564990776, lng: -119.42279193470492 }, 
+              title: "Gneiss Climbing - OG Banks",
+              id: '4',
+          },
+          {
+              position: { lat: 49.896709226472915, lng: -119.48772919235698 }, 
+              title: "Gneiss Climbing - Hill Security",
+              id: '5',
+          }
         ];
 
         const infoWindow = new InfoWindow();
