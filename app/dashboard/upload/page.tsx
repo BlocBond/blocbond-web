@@ -4,6 +4,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { toast } from "sonner";
+import { Input } from '@nextui-org/react';
+import { Select, SelectItem } from '@nextui-org/react';
 
 // import { Input } from '@/components/ui/input';
 // import { cn } from "@/lib/utils"
@@ -14,6 +16,36 @@ interface Square {
   width: number;
   height: number;
 }
+
+const holdTypes = [
+  { key: "Pinch", label: "Pinch" },
+  { key: "Crimp", label: "Crimp" },
+  { key: "Jug", label: "Jug" }
+];
+
+const categories = [
+  { key: "Overhang", label: "Overhang" },
+  { key: "Slab", label: "Slab" },
+  { key: "Dynamic", label: "Dynamic" },
+];
+
+const vratings = [
+  { key: "V-1", label: "V-1" },
+  { key: "V-2", label: "V-2" },
+  { key: "V-3", label: "V-3" },
+  { key: "V-4", label: "V-4" },
+  { key: "V-5", label: "V-5" },
+  { key: "V-6", label: "V-6" },
+  { key: "V-7", label: "V-7" },
+  { key: "V-8", label: "V-8" },
+  { key: "V-9", label: "V-9" },
+  { key: "V-10", label: "V-10" },
+  { key: "V-11", label: "V-11" },
+  { key: "V-12", label: "V-12" },
+  { key: "V-13", label: "V-13" },
+  { key: "V-14", label: "V-14" },
+  { key: "V-15", label: "V-15" },
+];
 
 const CanvasComponent = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -258,18 +290,41 @@ const CanvasComponent = () => {
     // downloadLink.click();
   }
   
-  
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [selectedHoldType, setSelectedHoldType] = useState("");
+  const [selectedVRating, setSelectedVRating] = useState("");
 
   return (
     <>
-      <input type="file" onChange={handleFileChange} accept="image/*" />
+      <div style={{ fontWeight: 'bold', marginLeft: '12px', marginBottom: '20px'}}>
+        <Input
+          type="file"
+          id="uploadRouteName"
+          onChange={handleFileChange}
+          accept="image/*"
+          style={{ display: 'none' }}
+        />
+        {/* <label htmlFor="uploadRouteName" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block', fontSize: "20px" }}> */}
+        <Button   
+          onClick={() => {
+            const inputElement = document.getElementById('uploadRouteName');
+            if (inputElement) {
+              inputElement.click();
+            }
+          }} 
+          variant="secondary"
+          style={{ marginBottom: '5px', fontSize: "20px"}}> Upload an image of a climb:
+        </Button>
+        {/* </label> */}
+      </div>
+
       <div style={{ position: 'relative' }}>
         <canvas
           // ref={canvasRef2}
           width={imageSize.width}
           height={imageSize.height}
           className='border border-black'
-          style={{ position: 'absolute', top: 0, left: 0 }}
+          style={{ position: 'absolute', top: 0, left: 12 }}
           id="canvas2"
         />
         <canvas
@@ -277,79 +332,141 @@ const CanvasComponent = () => {
           width={800}
           height={600}
           className='border border-black'
-          style={{ position: 'absolute', top: 0, left: 0 }}
+          style={{ position: 'absolute', top: 0, left: 12 }}
           id="canvas"
         />
+
         <div className="pt-5 mt-[600px]">
-          <label htmlFor="colorPicker">Color:</label>
-          <input
+          <label htmlFor="colorPicker" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>Color:</label>
+          <Input
             id="colorPicker"
             type="color"
             value={strokeColor}
             onChange={handleColorChange}
-            style={{ marginLeft: '10px' }}
+            style={{
+              width: '55px', 
+            }}
           />
         </div>
-        <div>
-          Route Name
-          <div className='border'>
-            <input type="text" id="uploadRouteName" name="uploadRouteName"/>
+
+          <div>
+            <label htmlFor="uploadRouteName" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>
+              Route Name
+            </label>
+            <Input
+              type="text"
+              id="uploadRouteName"
+              name="uploadRouteName"
+              fullWidth
+              placeholder="Enter route name"
+            />
           </div>
-        </div>
-        <div>
-          Gym Name
-          <div className='border flex'>
-            <input type="text" id="uploadGymName" name="uploadGymName"/>
+
+          <div>
+            <label htmlFor="uploadGymName" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>
+              Gym Name
+            </label>
+            <Input
+              type="text"
+              id="uploadGymName"
+              name="uploadGymName"
+              fullWidth
+              placeholder="Enter gym name"
+            />
           </div>
-        </div>
-        <div>
-          V-Rating
-          <div className="border text-center">
-            <select id="uploadVRating" name="uploadVRating">
-              <option value="V-1">V-1</option>
-              <option value="V-2">V-2</option>
-              <option value="V-3">V-3</option>
-              <option value="V-4">V-4</option>
-              <option value="V-5">V-5</option>
-              <option value="V-6">V-6</option>
-              <option value="V-7">V-7</option>
-              <option value="V-8">V-8</option>
-              <option value="V-9">V-9</option>
-              <option value="V-10">V-10</option>
-              <option value="V-11">V-11</option>
-              <option value="V-12">V-12</option>
-              <option value="V-13">V-13</option>
-              <option value="V-14">V-14</option>
-              <option value="V-15">V-15</option>
-            </select>
+
+          <div>
+            <label htmlFor="uploadDescription" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>
+              Description
+            </label>
+            <Input
+              type="text"
+              id="uploadDescription"
+              name="uploadDescription"
+              fullWidth
+              placeholder="Enter description"
+            />
           </div>
+
+      <div>
+        <p style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>V-rating</p>
+        <div className="border text-center flex">
+          <Select
+            isRequired
+            id="uploadVRating"
+            name="uploadVRating"
+            placeholder="Select a V-rating"
+            className="max-w-xs"
+            onChange={(vrating) => setSelectedVRating(vrating.target.value)}
+          >
+            {vratings.map((vrating) => (
+              <SelectItem 
+                key={vrating.key}
+                style={{
+                  backgroundColor: 'white', // or any color you prefer
+                  color: 'black', // text color
+                  padding: '10px', // adjust padding as needed
+                }}
+              >
+                {vrating.label}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
-        <div>
-          Category
-          <div className="border text-center">
-            <select id="uploadCategory" name="uploadCategory">
-              <option value="Overhang">Overhang</option>
-              <option value="Slab">Slab</option>
-              <option value="Dynamic">Dynamic</option>
-            </select>
-          </div>
+      </div>
+
+      <div>
+        <p style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>Category</p>
+        <div className="border text-center flex">
+          <Select
+            isRequired
+            id="uploadCategory"
+            name="uploadCategory"
+            placeholder="Select a category"
+            className="max-w-xs"
+            onChange={(category) => setSelectedCategory(category.target.value)}
+          >
+            {categories.map((category) => (
+              <SelectItem 
+                key={category.key}
+                style={{
+                  backgroundColor: 'white', // or any color you prefer
+                  color: 'black', // text color
+                  padding: '10px', // adjust padding as needed
+                }}
+              >
+                {category.label}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
-        <div>
-          Hold Type
-          <div className="border text-center">
-            <select id="uploadHoldType" name="uploadHoldType">
-              <option value="Pinch">Pinch</option>
-              <option value="Crimp">Crimp</option>
-              <option value="Jug">Jug</option>
-            </select>
-          </div>
+      </div>
+
+      <div>
+        <p style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>Hold Type</p>
+        <div className="border text-center flex">
+          <Select
+            id="uploadHoldType"
+            name="uploadHoldType"
+            isRequired
+            className="max-w-xs"
+            placeholder='Select hold type'
+            onChange={(holdType) => setSelectedHoldType(holdType.target.value)}
+          >
+            {holdTypes.map((holdType) => (
+              <SelectItem key={holdType.key}             
+              style={{
+                backgroundColor: 'white', // or any color you prefer
+                color: 'black', // text color
+                // padding: '8px', // adjust padding as needed
+              }}>
+                {holdType.label}
+              </SelectItem>
+            ))}
+          </Select>
         </div>
-        <div>
-          Description
-          <div className='border'>
-            <input type="text" id="uploadDescription" name="uploadDescription"/>
-          </div>
-        </div>
+      </div>
+
         <div className="pt-5 flex gap-5">
           <Button onClick={handleClear} variant="ghost" className="border border-black">
             Clear
