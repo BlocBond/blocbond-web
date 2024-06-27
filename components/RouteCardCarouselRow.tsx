@@ -13,7 +13,7 @@ import {
 } from "@/components/ui/carousel";
 
 export default function RouteCardCarouselRow({ gymId }: any) {
-  const { routes, isLoading, isError } = useRoutes("all");
+  const { routes, isLoading, isError } = useRoutes(gymId);
   if (isLoading) return <div>Loading...</div>;
   if (isError) return <div>Error loading gyms</div>;
 
