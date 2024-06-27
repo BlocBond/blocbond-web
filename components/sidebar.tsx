@@ -18,7 +18,7 @@ export default function Sidebar() {
 
     return (
         <div className="hidden bg-white md:block ">
-        <div className="flex h-full max-h-screen flex-col bg-stone-400/10">
+        <div className="flex h-full flex-col bg-stone-400/10">
           <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6 bg-teal-900">
             <Link href="/" className="flex items-center gap-2 text-white font-bold">
               {/* <MountainIcon className="h-6 w-6 fill-current" fill="" /> */}
