@@ -296,15 +296,14 @@ const CanvasComponent = () => {
 
   return (
     <>
-      <div style={{ fontWeight: 'bold', marginLeft: '12px', marginBottom: '20px'}}>
-        <Input
+      <div style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>
+        <input
           type="file"
           id="uploadRouteName"
           onChange={handleFileChange}
           accept="image/*"
-          style={{ display: 'none' }}
+          style={{ display: "none" }}
         />
-        {/* <label htmlFor="uploadRouteName" style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block', fontSize: "20px" }}> */}
         <Button   
           onClick={() => {
             const inputElement = document.getElementById('uploadRouteName');
@@ -315,7 +314,6 @@ const CanvasComponent = () => {
           variant="secondary"
           style={{ marginBottom: '5px', fontSize: "20px"}}> Upload an image of a climb:
         </Button>
-        {/* </label> */}
       </div>
 
       <div style={{ position: 'relative' }}>
