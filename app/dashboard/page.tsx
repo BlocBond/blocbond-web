@@ -39,6 +39,11 @@ export default function Dashboard() {
               id: 5,
               name: "Gneiss Climbing - Hill Security",
               logoImageUrl: "https://littlebuildingsolutions.com/wp-content/uploads/testimonial-image-gneissclimbing.png"
+            },
+            {
+              id: 6,
+              name: "Basecamp Climbing - Toronto",
+              logoImageUrl: "https://mma.prnewswire.com/media/1097214/Basecamp_Climbing_Basecamp_Climbing_Opens_Second_Location_in_Tor.jpg?w=200"
             }
           ]}
         />
