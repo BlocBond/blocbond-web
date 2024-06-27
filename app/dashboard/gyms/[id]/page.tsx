@@ -1,6 +1,7 @@
 "use client";
 
 import RouteCardRow from "@/components/RouteCardRow";
+import RouteCardCarouselRow from "@/components/RouteCardCarouselRow";
 import { Button } from "@/components/ui/button";
 import {
   Popover,
@@ -110,7 +111,7 @@ export default function Gym({ params }: { params: { id: string } }) {
       </div>
       <div className="mt-8 pl-9">
         <h2 className="text-xl opacity-80 mb-4">Routes</h2>
-        <RouteCardRow gymId={params.id}/>
+        <RouteCardCarouselRow gymId={params.id} />
       </div>{" "}
     </div>
   );
