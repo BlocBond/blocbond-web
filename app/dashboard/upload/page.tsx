@@ -39,12 +39,7 @@ const vratings = [
   { key: "V-7", label: "V-7" },
   { key: "V-8", label: "V-8" },
   { key: "V-9", label: "V-9" },
-  { key: "V-10", label: "V-10" },
-  { key: "V-11", label: "V-11" },
-  { key: "V-12", label: "V-12" },
-  { key: "V-13", label: "V-13" },
-  { key: "V-14", label: "V-14" },
-  { key: "V-15", label: "V-15" },
+  { key: "V-10", label: "V-10" }
 ];
 
 const CanvasComponent = () => {
@@ -215,6 +210,7 @@ const CanvasComponent = () => {
   }
 
   function handleCombineCanvases() {
+    console.log("MYRON " + selectedCategory)
     const canvas1 = document.getElementById('canvas') as HTMLCanvasElement;
     const canvas2 = document.getElementById('canvas2') as HTMLCanvasElement;
 
@@ -222,29 +218,35 @@ const CanvasComponent = () => {
 
     ctx2?.drawImage(canvas1, 0, 0);
 
+    console.log("MYRON3")
+
     const imageDataURL = canvas2.toDataURL();
     const routeName = document.getElementById('uploadRouteName') as HTMLInputElement;
     const gymName = document.getElementById('uploadGymName') as HTMLInputElement;
-    const vRating = document.getElementById('uploadVRating') as HTMLInputElement;
-    const category = document.getElementById('uploadCategory') as HTMLInputElement;
+    const vRating = selectedVRating;
+    const category = selectedCategory;
     const description = document.getElementById('uploadDescription') as HTMLInputElement;
-    const holdType = document.getElementById('uploadHoldType') as HTMLInputElement;
+    const holdType = selectedHoldType;
    
+    console.log("MYRON2 " + " " + routeName.value + " " + gymName.value + " " + vRating + " " + category + " " + description.value + " " + holdType)
+
     const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
-    if (routeName?.value && gymName?.value && vRating?.value && category?.value && description?.value && holdType?.value) {
+    if (routeName?.value && gymName?.value && vRating && category && description?.value && holdType) {
       const url = process.env.NEXT_PUBLIC_BACKEND_URL! + '/store_climb'
       
       const requestBody = {
           gym_id: "1",
           climb_name: routeName?.value,
           gym_name: gymName?.value,
-          v_rating: vRating?.value,
-          climb_type: category?.value,
-          hold_type: holdType?.value,
+          v_rating: vRating,
+          climb_type: category,
+          hold_type: holdType,
           description: description?.value,
           image_data: imageDataURL,
           image_name: "grotto_new"
       };
+
+      console.log("ERCI");
 
       fetch(url, {
         method: 'POST',
@@ -299,14 +301,14 @@ const CanvasComponent = () => {
       <div style={{ fontWeight: 'bold', marginLeft: '12px', marginTop: '4px', marginBottom: '4px', display: 'block' }}>
         <input
           type="file"
-          id="uploadRouteName"
+          id="uploadImageUrl"
           onChange={handleFileChange}
           accept="image/*"
           style={{ display: "none" }}
         />
         <Button   
           onClick={() => {
-            const inputElement = document.getElementById('uploadRouteName');
+            const inputElement = document.getElementById('uploadImageUrl');
             if (inputElement) {
               inputElement.click();
             }
@@ -446,7 +448,7 @@ const CanvasComponent = () => {
           <Select
             id="uploadHoldType"
             name="uploadHoldType"
-            isRequired
+            isRequired={true}
             className="max-w-xs"
             placeholder='Select hold type'
             onChange={(holdType) => setSelectedHoldType(holdType.target.value)}
