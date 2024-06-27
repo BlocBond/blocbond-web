@@ -43,6 +43,11 @@ export default function Map() {
               position: { lat: 49.896709226472915, lng: -119.48772919235698 }, 
               title: "Gneiss Climbing - Hill Security",
               id: '5',
+          },
+          {
+            position: { lat: 43.64996207530534, lng: -79.39762343317936 }, 
+            title: "Basecamp Climbing - Toronto",
+            id: '6',
           }
         ];
 
